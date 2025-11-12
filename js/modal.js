@@ -1,22 +1,24 @@
-const modalBtns = document.querySelectorAll('.modal__button, .course__button')
-const modal = document.querySelector('.modal')
-const modalInner = document.querySelector('.modal__inner')
+const modal = () => {
+    const modalBtns = document.querySelectorAll('.modal__button, .course__button')
+    const modal = document.querySelector('.modal')
+    const modalInner = document.querySelector('.modal__inner')
 
-function openModal() {
-    modal.style.display = 'flex'
-}
+    function openModal() {
+        modal.style.display = 'flex'
+    }
 
-function closeModal() {
-    modal.style.display = ''
-}
+    function closeModal() {
+        modal.style.display = ''
+    }
 
-modalBtns.forEach(element => {
-    element.addEventListener('click', openModal)
-});
+    modalBtns.forEach(element => {
+        element.addEventListener('click', openModal)
+    });
 
-const closeBtn = document.createElement('button')
-closeBtn.textContent = 'x'
-closeBtn.style.cssText = `
+    const closeBtn = document.createElement('button')
+    closeBtn.type = 'button'
+    closeBtn.textContent = 'x'
+    closeBtn.style.cssText = `
     position: absolute;
     top: 10px;
     right: 10px;
@@ -34,16 +36,22 @@ closeBtn.style.cssText = `
     line-height: 1;
 `
 
-closeBtn.addEventListener('click', closeModal)
+    closeBtn.addEventListener('click', (event) => {
+        event.stopPropagation()
+        closeModal()
+    })
 
 
-modalInner.style.position = 'relative'
-modalInner.appendChild(closeBtn)
+    modalInner.style.position = 'relative'
+    modalInner.appendChild(closeBtn)
 
-modal.addEventListener('click', (event) => {
-    const modalContent = event.target.closest('.modal__inner')
-    console.log(modalContent)
-    if (!modalContent) {
-        modal.style.display = ''
-    }
-})
+    modal.addEventListener('click', (event) => {
+        const modalContent = event.target.closest('.modal__inner')
+        console.log(modalContent)
+        if (!modalContent) {
+            modal.style.display = ''
+        }
+    })
+}
+
+modal()
